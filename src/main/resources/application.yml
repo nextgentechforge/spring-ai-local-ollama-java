@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: nextgentechforge-spring-ai
+  profiles:
+    default: openai
+  ai:
+    model:
+      chat: none
+      embedding: none
+      image: none
+      moderation: none
+      audio:
+        speech: none
+        transcription: none
+    retry:
+      max-attempts: 2
+  mvc:
+    problemdetails:
+      enabled: true
+  http:
+    clients:
+      connect-timeout: ${AI_CONNECT_TIMEOUT:10s}
+      read-timeout: ${AI_READ_TIMEOUT:90s}
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+app:
+  web-search:
+    enabled: ${WEB_SEARCH_ENABLED:true}
+    base-url: ${SEARXNG_BASE_URL:http://localhost:8888}
+    timeout: ${WEB_SEARCH_TIMEOUT:10s}
+    max-results: ${WEB_SEARCH_MAX_RESULTS:3}
+  rag:
+    top-k: ${RAG_TOP_K:4}
+    similarity-threshold: ${RAG_SIMILARITY_THRESHOLD:0.25}
+---
+spring:
+  config:
+    activate:
+      on-profile: openai
+  ai:
+    model:
+      chat: openai
+      embedding: openai
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      timeout: ${OPENAI_TIMEOUT:90s}
+      max-retries: ${OPENAI_MAX_RETRIES:1}
+      chat:
+        model: ${OPENAI_MODEL:gpt-4o-mini}
+      embedding:
+        model: ${OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
+---
+spring:
+  config:
+    activate:
+      on-profile: ollama
+  ai:
+    model:
+      chat: ollama
+      embedding: ollama
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      chat:
+        options:
+          model: ${OLLAMA_CHAT_MODEL:llama3.1:8b}
+      embedding:
+        options:
+          model: ${OLLAMA_EMBEDDING_MODEL:nomic-embed-text}

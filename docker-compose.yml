@@ -1,0 +1,22 @@
+services:
+  ollama:
+    image: ollama/ollama:0.11.10
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+  searxng:
+    image: searxng/searxng@sha256:547fdc19b45510ea1c0bc65ffadab3fcdde1ab1efd7fe696602284ba54d795ca
+    ports:
+      - "127.0.0.1:8888:8080"
+    entrypoint: ["/bin/sh", "/opt/searxng/start.sh"]
+    environment:
+      FORCE_OWNERSHIP: "false"
+      GRANIAN_WORKERS: "1"
+    volumes:
+      - ./config/searxng/settings.yml:/etc/searxng/settings.yml:ro
+      - ./config/searxng/start.sh:/opt/searxng/start.sh:ro
+    restart: unless-stopped
+volumes:
+  ollama-data:

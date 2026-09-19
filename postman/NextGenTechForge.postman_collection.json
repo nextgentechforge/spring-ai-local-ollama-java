@@ -1,0 +1,186 @@
+{
+  "variable": [
+    {
+      "key": "baseUrl",
+      "type": "string",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "name": "NextGenTechForge - Spring AI",
+    "description": "Local Spring Boot API backed by Ollama. Start the app before sending requests. CPU inference may be slow. No authentication is configured for this loopback-only tutorial."
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/health",
+        "header": []
+      }
+    },
+    {
+      "name": "Basic chat",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"message\": \"Explain dependency injection in one paragraph.\"\r\n}"
+        },
+        "method": "POST",
+        "url": "{{baseUrl}}/api/chat",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tool - deployment version",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"message\": \"What version of payment-service is currently running?\"\r\n}"
+        },
+        "method": "POST",
+        "url": "{{baseUrl}}/api/chat",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tool - service status",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"message\": \"What is notification-service status?\"\r\n}"
+        },
+        "method": "POST",
+        "url": "{{baseUrl}}/api/chat",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RAG - architecture",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"message\": \"How does our payment-service communicate with order-service?\"\r\n}"
+        },
+        "method": "POST",
+        "url": "{{baseUrl}}/api/chat",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RAG - rollback",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"message\": \"How do we roll back a failed deployment?\"\r\n}"
+        },
+        "method": "POST",
+        "url": "{{baseUrl}}/api/chat",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RAG - deployment location",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"message\": \"Where is the payment service deployed?\"\r\n}"
+        },
+        "method": "POST",
+        "url": "{{baseUrl}}/api/chat",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Internet - search directly (no LLM)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/web/search?q=Spring%20Boot%20official%20releases"
+      }
+    },
+    {
+      "name": "Internet - ask local LLM with sources",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "value": "application/json",
+            "key": "Content-Type"
+          }
+        ],
+        "url": "{{baseUrl}}/api/chat",
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\"message\":\"Search the internet for the latest Spring Boot release information. Cite the source URLs.\"}"
+        }
+      }
+    }
+  ]
+}
